@@ -33,17 +33,54 @@ len(files)
 data_path = "../../data/raw/MetaMotion/"
 f = files[0]
 
-participants = f.split("-")[0].replace(data_path,"")
+participants = f.split("-")[0].replace(data_path, "")
 label = f.split("-")[1]
 category = f.split("-")[2].rstrip("123")
+
+df = pd.read_csv(f)
+
+df['participants'] = participants
+df['label'] = label
+df['category'] = category
+
 # --------------------------------------------------------------
 # Read all files
 # --------------------------------------------------------------
 
+acc_df = pd.DataFrame()
+gyr_df = pd.DataFrame()
+
+acc_set = 1
+gyr_set = 1
+
+for f in files:
+    participants = f.split("-")[0].replace(data_path, "")
+    label = f.split("-")[1]
+    category = f.split("-")[2].rstrip("123").rstrip("_MetaWear_2019")
+
+    df = pd.read_csv(f)
+
+    df['participants'] = participants
+    df['label'] = label
+    df['category'] = category
+
+    if "Accelerometer" in f:
+        df["set"] = acc_set
+        acc_set += 1
+        acc_df = pd.concat([acc_df, df])
+
+    if "Gyroscope" in f:
+        df["set"] = gyr_set
+        gyr_set += 1
+        gyr_df = pd.concat([gyr_df, df])
+ 
 
 # --------------------------------------------------------------
 # Working with datetimes
 # --------------------------------------------------------------
+acc_df.info()
+pd.to_datetime(df['epoch (ms)'], unit="ms")
+pd.to_datetime(df['time (01:00)'])
 
 
 # --------------------------------------------------------------
