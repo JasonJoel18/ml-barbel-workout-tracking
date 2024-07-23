@@ -1,29 +1,41 @@
 import pandas as pd
 from glob import glob
+from pathlib import Path
+import os
+
+# --------------------------------------------------------------
+# Get the directory where the script is located and changing the working directory
+# --------------------------------------------------------------
+script_dir = Path(__file__).resolve().parent
+os.chdir(script_dir)
 
 # --------------------------------------------------------------
 # Read single CSV file
 # --------------------------------------------------------------
 
 single_file_acc = pd.read_csv(
-    "/Users/jasonjoelpinto/Documents/GitHub/ml-barbel-workout-tracking/data/raw/MetaMotion/E-row-medium_MetaWear_2019-01-18T18.30.48.777_C42732BE255C_Gyroscope_25.000Hz_1.4.41.csv")
+    "../../data/raw/MetaMotion/A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Accelerometer_12.500Hz_1.4.4.csv")
 
 single_file_gyr = pd.read_csv(
-    "/Users/jasonjoelpinto/Documents/GitHub/ml-barbel-workout-tracking/data/raw/MetaMotion/A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv")
+    "../../data/raw/MetaMotion/A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv")
 
 # --------------------------------------------------------------
 # List all data in data/raw/MetaMotion
 # --------------------------------------------------------------
 
 files = glob(
-    "/Users/jasonjoelpinto/Documents/GitHub/ml-barbel-workout-tracking/data/raw/MetaMotion/*.csv")
+    "../../data/raw/MetaMotion/*.csv")
 len(files)
 # --------------------------------------------------------------
 # Extract features from filename
 # --------------------------------------------------------------
 
-data_path = ""/Users/jasonjoelpinto/Documents/GitHub/ml-barbel-workout-tracking/data/raw/MetaMotion/*.csv""
+data_path = "../../data/raw/MetaMotion/"
+f = files[0]
 
+participants = f.split("-")[0].replace(data_path,"")
+label = f.split("-")[1]
+category = f.split("-")[2].rstrip("123")
 # --------------------------------------------------------------
 # Read all files
 # --------------------------------------------------------------
