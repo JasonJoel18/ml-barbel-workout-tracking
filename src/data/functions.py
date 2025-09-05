@@ -1,5 +1,10 @@
 import pandas as pd
 
+# files = glob(
+#     "../../data/raw/MetaMotion/*.csv")
+# data_path = "../../data/raw/MetaMotion/"
+
+
 def read_data_from_files(files,data_path):
 
     acc_df = pd.DataFrame()
@@ -46,3 +51,6 @@ def read_data_from_files(files,data_path):
     del gyr_df["elapsed (s)"]
 
     return acc_df, gyr_df
+
+
+# acc_df, gyr_df = read_data_from_files(files,data_path)
